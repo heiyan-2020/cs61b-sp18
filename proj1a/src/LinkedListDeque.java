@@ -1,10 +1,10 @@
-public class LinkedListDeque<Type>{
+public class LinkedListDeque<T>{
     private class StuffNode{
-        Type first;
+        T first;
         StuffNode prev;
         StuffNode next;
 
-        StuffNode(Type var, StuffNode front, StuffNode res){
+        StuffNode(T var, StuffNode front, StuffNode res){
             first = var;
             prev = front;
             next = res;
@@ -22,14 +22,14 @@ public class LinkedListDeque<Type>{
         return sizeOfDeque;
     }
 
-    public void addFirst(Type item){
+    public void addFirst(T item){
         StuffNode firstNode = new StuffNode(item, sentinel, sentinel.next);
         sentinel.next.prev = firstNode;
         sentinel.next = firstNode;
         sizeOfDeque++;
      }
 
-     public void addLast(Type item){
+     public void addLast(T item){
         StuffNode lastNode = new StuffNode(item, sentinel.prev, sentinel);
         sentinel.prev.next = lastNode;
         sentinel.prev = lastNode;
@@ -51,7 +51,7 @@ public class LinkedListDeque<Type>{
         System.out.println(builder.toString());
      }
 
-     public Type removeFirst(){
+     public T removeFirst(){
         if(sizeOfDeque == 0){
             return null;
         }
@@ -62,7 +62,7 @@ public class LinkedListDeque<Type>{
         return firstNode.first;
      }
 
-     public Type removeLast(){
+     public T removeLast(){
         if(sizeOfDeque == 0){
             return null;
         }
@@ -75,10 +75,10 @@ public class LinkedListDeque<Type>{
     /**
      * if index > size, then return the last element.
      */
-     public Type get(int index){
+     public T get(int index){
         int count = 0;
         StuffNode iter = sentinel;
-        while(sentinel.next != sentinel){
+        while(iter.next != sentinel){
             iter = iter.next;
             count++;
             if(count == index){
@@ -88,13 +88,13 @@ public class LinkedListDeque<Type>{
         return iter.next.first;
      }
 
-     private Type getHelper(StuffNode lst, int index){
+     private T getHelper(StuffNode lst, int index){
         if(lst.next == sentinel || index == 0){
-            return lst.first;
+            return lst.next.first;
         }
         return getHelper(lst.next, index - 1);
      }
-     public Type getRecursive(int index){
+     public T getRecursive(int index){
         return getHelper(sentinel, index);
      }
 
@@ -104,7 +104,7 @@ public class LinkedListDeque<Type>{
         testQueue.addFirst(10);
         testQueue.addLast(20);
         System.out.println(testQueue.get(10));
-        System.out.println(testQueue.getRecursive(100));
+        System.out.println(testQueue.getRecursive(1));
         testQueue.printDeque();
     }
 }
