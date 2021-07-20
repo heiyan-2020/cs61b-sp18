@@ -75,30 +75,30 @@ public class LinkedListDeque<T> {
     /**
      * if index > size, then return the last element.
      */
-     public T get(int index) {
+    public T get(int index) {
         StuffNode iter = sentinel;
         while (iter.next != sentinel) {
             if (index == 0) {
-               break;
+                break;
             }
             index--;
             iter = iter.next;
         }
         return iter.next.first;
-     }
+    }
 
-     private T getHelper(StuffNode lst, int index) {
+    private T getHelper(StuffNode lst, int index) {
         if (lst.next == sentinel || index == 0) {
             return lst.next.first;
         }
         return getHelper(lst.next, index - 1);
-     }
+    }
 
-     public T getRecursive(int index) {
-         return getHelper(sentinel, index);
-     }
+    public T getRecursive(int index) {
+        return getHelper(sentinel, index);
+    }
 
-     private static void main(String[] args) {
+    private static void main(String[] args) {
         LinkedListDeque<Integer> testQueue = new LinkedListDeque();
         testQueue.addLast(1);
         testQueue.addFirst(2);

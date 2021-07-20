@@ -1,4 +1,4 @@
-public class ArrayDeque <T> {
+public class ArrayDeque<T> {
     private static int mod(int x, int y) {
         return x >= 0 ? x % y : y + x % y;
     }
@@ -41,8 +41,8 @@ public class ArrayDeque <T> {
             int firstAmount = items.length - firstIndex - 1;
             System.arraycopy(items, mod(firstIndex + 1, items.length), des,
                     des.length / 2, firstAmount);
-            System.arraycopy(items, 0, des, des.length / 2 +
-                    firstAmount, amount - firstAmount);
+            System.arraycopy(items, 0, des, des.length / 2
+                    + firstAmount, amount - firstAmount);
         }
         firstIndex = des.length / 2 - 1;
         lastIndex = des.length / 2 + amount;
@@ -81,7 +81,7 @@ public class ArrayDeque <T> {
             }
         } else {
             for (int i = mod(firstIndex + 1, items.length);
-                 i != lastIndex; i = mod(i + 1, items.length)){
+                 i != lastIndex; i = mod(i + 1, items.length)) {
                 builder.append(items[i] + " ");
             }
         }
