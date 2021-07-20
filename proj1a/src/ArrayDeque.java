@@ -1,4 +1,7 @@
 public class ArrayDeque<Type>{
+    private static int mod(int x, int y){
+        return x>=0?x%y:y+x%y;
+    }
     private Type[] items;
     private int firstIndex;
     private int lastIndex;
@@ -11,35 +14,16 @@ public class ArrayDeque<Type>{
         size = 0;
     }
 
+    /**
+     * Invoke this method when former items[] is actually full, so the firstIndex
+     */
     private void enlargeByTwice(){
-        int length = items.length;
-        int capacity = length * 2;
-        Type[] des = (Type[])new Object[capacity];
-        Type[] leftHalf = (Type[])new Object[length];
-        Type[] rightHalf = (Type[]) new Object[length];
-
-        if(lastIndex >= length){
-            System.arraycopy(items, length/2, rightHalf, 0, lastIndex - length + 1);
-            lastIndex = capacity/2 + lastIndex - length;
-        }
-        else{
-            System.arraycopy(items,length/2,rightHalf,0,length/2);
-            System.arraycopy(items,0,rightHalf,length/2,lastIndex+1);
-            lastIndex = capacity/2 + length/2 + lastIndex;
-        }
-
-        if(firstIndex < length){
-            System.arraycopy(items,firstIndex,leftHalf,0,length/2-firstIndex);
-            firstIndex = capacity/2 - length/2 + firstIndex;
-        }
-        else{
-            System.arraycopy(items,0,leftHalf,0,length/2);
-            System.arraycopy(items,firstIndex,leftHalf,length/2,length-firstIndex);
-            firstIndex = capacity/2 - length/2 - length + firstIndex;
-        }
-
-        System.arraycopy(rightHalf,0,des,capacity/2,rightHalf.length);
-        System.arraycopy(leftHalf,0,des,firstIndex,capacity/2-firstIndex);
+        int amount = items.length - firstIndex - 1;
+        Type[] des = (Type[])new Object[items.length*2];
+        System.arraycopy(items,mod(firstIndex+1,items.length),des,items.length,amount);
+        System.arraycopy(items,0,des,items.length+amount,items.length-amount);
+        firstIndex = items.length - 1;
+        lastIndex = 0;
         items = des;
     }
 
@@ -48,29 +32,36 @@ public class ArrayDeque<Type>{
      * Particularly, firstIndex < items.length/2 && lastIndex >= items.length/2 in both former array and present array.
      */
     private void reduceByHalf(){
+        int amount = mod(lastIndex-firstIndex,items.length) - 1;
         Type[] des = (Type[]) new Object[items.length/2];
-        System.arraycopy(items,items.length/2,des,des.length/2,lastIndex-items.length+1);
-        System.arraycopy(items,firstIndex,des,des.length/2 - (items.length/2-firstIndex),items.length/2-firstIndex);
-        lastIndex = des.length/2 + lastIndex - items.length;
-        firstIndex = des.length/2 - items.length/2 + firstIndex;
+        if(lastIndex >= firstIndex){
+            System.arraycopy(items,mod(firstIndex+1,items.length),des,des.length/2,amount);
+        }
+        else{
+            int firstAmount = items.length - firstIndex - 1;
+            System.arraycopy(items,mod(firstIndex+1,items.length),des,des.length/2,firstAmount);
+            System.arraycopy(items,0,des,des.length/2+firstAmount,amount-firstAmount);
+        }
+        firstIndex = des.length/2 - 1;
+        lastIndex = des.length/2 + amount;
         items = des;
     }
 
     public void addFirst(Type item){
-        if(firstIndex == lastIndex){
+        if(size == items.length){
             enlargeByTwice();
         }
         items[firstIndex] = item;
-        firstIndex = (firstIndex - 1) % items.length;
+        firstIndex = mod(firstIndex-1,items.length);
         size++;
     }
 
     public void addLast(Type item){
-        if(firstIndex == lastIndex){
+        if(size == items.length){
             enlargeByTwice();
         }
         items[lastIndex] = item;
-        lastIndex = (lastIndex + 1)%items.length;
+        lastIndex = mod(lastIndex+1,items.length);
         size++;
     }
 
@@ -80,11 +71,8 @@ public class ArrayDeque<Type>{
 
     public void printDeque(){
         StringBuilder builder = new StringBuilder();
-        for(int i = firstIndex+1;i != items.length/2;i = (i + 1)%items.length){
-            builder.append(items[i] + " ");
-        }
-        for(int j = items.length/2;j != lastIndex;j = (j + 1)%items.length){
-            builder.append(items[j] + " ");
+        for(int i = firstIndex + 1; i != lastIndex; i = mod(i+1,items.length)){
+            builder.append(items[i]+" ");
         }
         builder.deleteCharAt(builder.length() - 1);
         System.out.println(builder.toString());
@@ -94,45 +82,48 @@ public class ArrayDeque<Type>{
         if(size == 0){
             return null;
         }
-        Type last;
-        int index;
-        if(firstIndex == items.length/2 - 1){
-            items[items.length/2] = null;
-            System.arraycopy(items,items.length/2+1,items,items.length/2,items.length/2-1);
-
-        }
-        else{
-            index = (firstIndex + 1) % items.length;
-            last = items[index];
-            items[index] = null;
-            firstIndex = index;
-        }
+        int deleteIndex = mod(firstIndex+1,items.length);
+        Type deleteElem = items[deleteIndex];
+        firstIndex = deleteIndex;
+        items[deleteIndex] = null;
         size--;
-        if(size / items.length < 0.25 && items.length > 8){
+        if(((double)size/items.length) < 0.25 && items.length > 8){
             reduceByHalf();
         }
-        return last;
+        return deleteElem;
     }
 
     public Type removeLast(){
         if(size == 0){
             return null;
         }
-        Type last;
-        int index;
-        if(lastIndex == items.length/2){
-
-        }
+        int deleteIndex = mod(lastIndex-1,items.length);
+        Type deleteElem = items[deleteIndex];
+        lastIndex = deleteIndex;
+        items[deleteIndex] = null;
         size--;
-        if(size / items.length < 0.25 && items.length > 8){
+        if(((double)size/items.length) < 0.25 && items.length > 8){
             reduceByHalf();
         }
-        return last;
+        return deleteElem;
     }
 
     public int size(){
         return size;
     }
+
+    public Type get(int index){
+        int i = mod(firstIndex+1, items.length);
+        while(i != mod(lastIndex, items.length)){
+            if(index == 0){
+                break;
+            }
+            i = mod(i+1,items.length);
+            index--;
+        }
+        return items[i];
+    }
+
     public static void main(String[] args) {
         ArrayDeque<Integer> testQueue = new ArrayDeque<>();
         testQueue.addFirst(3);
@@ -144,6 +135,7 @@ public class ArrayDeque<Type>{
         testQueue.addLast(7);
         testQueue.addLast(8);
         testQueue.addLast(9);
+        System.out.println(testQueue.get(4));
         System.out.println(testQueue.size());
         testQueue.printDeque();
     }
