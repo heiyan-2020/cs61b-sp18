@@ -1,14 +1,14 @@
-public class ArrayDeque<Type>{
+public class ArrayDeque<T>{
     private static int mod(int x, int y){
-        return x>=0?x%y:y+x%y;
+        return x >= 0?x % y:y + x % y;
     }
-    private Type[] items;
+    private T[] items;
     private int firstIndex;
     private int lastIndex;
     private int size;
 
     public ArrayDeque(){
-        items = (Type[])new Object[8];
+        items = (T[])new Object[8];
         lastIndex = items.length / 2;
         firstIndex = lastIndex - 1;
         size = 0;
@@ -19,7 +19,7 @@ public class ArrayDeque<Type>{
      */
     private void enlargeByTwice(){
         int amount = items.length - firstIndex - 1;
-        Type[] des = (Type[])new Object[items.length*2];
+        T[] des = (T[])new Object[items.length*2];
         System.arraycopy(items,mod(firstIndex+1,items.length),des,items.length,amount);
         System.arraycopy(items,0,des,items.length+amount,items.length-amount);
         firstIndex = items.length - 1;
@@ -33,7 +33,7 @@ public class ArrayDeque<Type>{
      */
     private void reduceByHalf(){
         int amount = mod(lastIndex-firstIndex,items.length) - 1;
-        Type[] des = (Type[]) new Object[items.length/2];
+        T[] des = (T[]) new Object[items.length/2];
         if(lastIndex >= firstIndex){
             System.arraycopy(items,mod(firstIndex+1,items.length),des,des.length/2,amount);
         }
@@ -47,7 +47,7 @@ public class ArrayDeque<Type>{
         items = des;
     }
 
-    public void addFirst(Type item){
+    public void addFirst(T item){
         if(size == items.length){
             enlargeByTwice();
         }
@@ -56,7 +56,7 @@ public class ArrayDeque<Type>{
         size++;
     }
 
-    public void addLast(Type item){
+    public void addLast(T item){
         if(size == items.length){
             enlargeByTwice();
         }
@@ -71,19 +71,27 @@ public class ArrayDeque<Type>{
 
     public void printDeque(){
         StringBuilder builder = new StringBuilder();
-        for(int i = firstIndex + 1; i != lastIndex; i = mod(i+1,items.length)){
-            builder.append(items[i]+" ");
+        if(size == items.length){
+            builder.append(items[mod(firstIndex+1,items.length)]+" ");
+            for(int i = mod(firstIndex+2,items.length); i != lastIndex; i = mod(i+1,items.length)){
+                builder.append(items[i]+" ");
+            }
+        }
+        else{
+            for(int i = mod(firstIndex+1,items.length); i != lastIndex; i = mod(i+1,items.length)){
+                builder.append(items[i]+" ");
+            }
         }
         builder.deleteCharAt(builder.length() - 1);
         System.out.println(builder.toString());
     }
 
-    public Type removeFirst(){
+    public T removeFirst(){
         if(size == 0){
             return null;
         }
         int deleteIndex = mod(firstIndex+1,items.length);
-        Type deleteElem = items[deleteIndex];
+        T deleteElem = items[deleteIndex];
         firstIndex = deleteIndex;
         items[deleteIndex] = null;
         size--;
@@ -93,12 +101,12 @@ public class ArrayDeque<Type>{
         return deleteElem;
     }
 
-    public Type removeLast(){
+    public T removeLast(){
         if(size == 0){
             return null;
         }
         int deleteIndex = mod(lastIndex-1,items.length);
-        Type deleteElem = items[deleteIndex];
+        T deleteElem = items[deleteIndex];
         lastIndex = deleteIndex;
         items[deleteIndex] = null;
         size--;
@@ -112,9 +120,12 @@ public class ArrayDeque<Type>{
         return size;
     }
 
-    public Type get(int index){
+    public T get(int index){
         int i = mod(firstIndex+1, items.length);
-        while(i != mod(lastIndex, items.length)){
+        if(index > size){
+            return items[mod(lastIndex-1,items.length)];
+        }
+        while(true){
             if(index == 0){
                 break;
             }
@@ -126,16 +137,15 @@ public class ArrayDeque<Type>{
 
     public static void main(String[] args) {
         ArrayDeque<Integer> testQueue = new ArrayDeque<>();
-        testQueue.addFirst(3);
-        testQueue.addFirst(2);
-        testQueue.addFirst(1);
+        testQueue.addLast(1);
+        testQueue.addLast(2);
+        testQueue.addLast(3);
         testQueue.addLast(4);
         testQueue.addLast(5);
         testQueue.addLast(6);
         testQueue.addLast(7);
         testQueue.addLast(8);
-        testQueue.addLast(9);
-        System.out.println(testQueue.get(4));
+        System.out.println(testQueue.get(1));
         System.out.println(testQueue.size());
         testQueue.printDeque();
     }

@@ -1,6 +1,6 @@
 public class ArrayDeque<T>{
     private static int mod(int x, int y){
-        return x>=0?x%y:y+x%y;
+        return x >= 0?x % y:y + x % y;
     }
     private T[] items;
     private int firstIndex;
