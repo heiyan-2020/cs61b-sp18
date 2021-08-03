@@ -1,5 +1,5 @@
-public class OffByN implements CharacterComparator{
-    int offSet;
+public class OffByN implements CharacterComparator {
+    private int offSet;
 
     @Override
     public boolean equalChars(char x, char y) {

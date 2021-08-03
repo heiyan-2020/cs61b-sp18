@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private static int mod(int x, int y) {
         return x >= 0 ? x % y : y + x % y;
     }
