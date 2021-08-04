@@ -16,12 +16,13 @@ public class TestArrayDequeGold {
                     input.addFirst(i);
                     std.addFirst(i);
                     invokeTrace.append("addFirst(" + i + ")" + System.lineSeparator());
+                    assertEquals(invokeTrace.toString(), std.get(0), input.get(0));
                 } else {
                     input.addLast(i);
                     std.addLast(i);
                     invokeTrace.append("addLast(" + i + ")" + System.lineSeparator());
+                    assertEquals(invokeTrace.toString(), std.get(std.size() - 1), input.get(input.size() - 1));
                 }
-                assertEquals(invokeTrace.toString(), std.get(std.size() - 1), input.get(input.size() - 1));
             }
 
             int removeLimit = (int) (10 * StdRandom.uniform());
