@@ -19,7 +19,7 @@ public class TestArrayDequeGold {
                 } else {
                     input.addLast(i);
                     std.addLast(i);
-                    invokeTrace.append("removeLast(" + i + ")" + System.lineSeparator());
+                    invokeTrace.append("addLast(" + i + ")" + System.lineSeparator());
                 }
                 assertEquals(invokeTrace.toString(), std.get(std.size() - 1), input.get(input.size() - 1));
             }
