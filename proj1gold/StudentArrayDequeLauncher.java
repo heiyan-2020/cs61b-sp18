@@ -2,6 +2,7 @@
 * One thing you might consider is to try printing out the sequence of
 * operations */
 public class StudentArrayDequeLauncher {
+
     public static void main(String[] args) {
         StudentArrayDeque<Integer> sad1 = new StudentArrayDeque<>();
 
