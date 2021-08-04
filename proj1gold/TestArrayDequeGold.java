@@ -5,10 +5,10 @@ public class TestArrayDequeGold {
 
     @Test
     public void testArrayDeque() {
-        StudentArrayDeque<Integer> input = new StudentArrayDeque<>();
-        ArrayDequeSolution<Integer> std = new ArrayDequeSolution<>();
         while (true) {
             StringBuilder invokeTrace = new StringBuilder();
+            StudentArrayDeque<Integer> input = new StudentArrayDeque<>();
+            ArrayDequeSolution<Integer> std = new ArrayDequeSolution<>();
             for (int i = 0; i < 10; i++) {
                 double random = StdRandom.uniform();
 
