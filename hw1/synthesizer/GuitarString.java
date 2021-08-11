@@ -1,9 +1,5 @@
-package synthesizer;// TODO: Make sure to make this class a part of the synthesizer package
-//package <package name>;
+package synthesizer;
 
-import synthesizer.BoundedQueue;
-
-//Make sure this class is public
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final means
      * the values cannot be changed at runtime. We'll discuss this and other topics
@@ -35,9 +31,6 @@ public class GuitarString {
      * the Karplus-Strong algorithm. 
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       Do not call StdAudio.play().
         Double sample  = buffer.dequeue();
         buffer.enqueue(0.5 * DECAY * (sample + buffer.peek()));
     }
