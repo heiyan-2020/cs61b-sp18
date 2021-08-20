@@ -58,27 +58,28 @@ public class Game {
             case 'Q': return null;
             case 'L': ge = Generator.loadWorld();break;
             case 'N': {
-                boolean notEnd = true;
-                StringBuilder seed = new StringBuilder();
-                while (input.length() > 0 && notEnd) {
-                    char ch = input.charAt(0);
-                    input = input.substring(1);
-                    switch (ch) {
-                        case '0':
-                        case '1':
-                        case '2':
-                        case '3':
-                        case '4':
-                        case '5':
-                        case '6':
-                        case '7':
-                        case '8':
-                        case '9': seed.append(ch);break;
-                        case 'S': ge = new Generator(Long.parseLong(seed.toString()));notEnd = false;break;
-                        default: System.exit(0);break;
-                    }
-                }
-                break;
+                return null;
+//                boolean notEnd = true;
+//                StringBuilder seed = new StringBuilder();
+//                while (input.length() > 0 && notEnd) {
+//                    char ch = input.charAt(0);
+//                    input = input.substring(1);
+//                    switch (ch) {
+//                        case '0':
+//                        case '1':
+//                        case '2':
+//                        case '3':
+//                        case '4':
+//                        case '5':
+//                        case '6':
+//                        case '7':
+//                        case '8':
+//                        case '9': seed.append(ch);break;
+//                        case 'S': ge = new Generator(Long.parseLong(seed.toString()));notEnd = false;break;
+//                        default: System.exit(0);break;
+//                    }
+//                }
+                //break;
             }
             default: break;
         }

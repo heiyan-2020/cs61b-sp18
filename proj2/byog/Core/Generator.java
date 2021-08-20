@@ -254,6 +254,7 @@ public class Generator {
     public void reloadPrevWorld(char[] keys) {
         for (Character ch : keys) {
             player.makeMove(ch);
+            this.keys.add(ch);
         }
     }
 }
