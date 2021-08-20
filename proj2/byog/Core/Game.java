@@ -50,9 +50,6 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        if (input.length() < 3) {
-            return null;
-        }
         int index = 0;
         char mode = input.charAt(0);
         input = input.substring(1);
@@ -83,7 +80,7 @@ public class Game {
                 }
                 break;
             }
-            default: return null;
+            default: break;
         }
         ge.generateWorld();
         ge.generatePlayer();
