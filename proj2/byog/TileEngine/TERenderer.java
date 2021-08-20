@@ -4,6 +4,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Collections;
 
 /**
  * Utility class for rendering tiles. You do not need to modify this file. You're welcome
@@ -96,6 +97,6 @@ public class TERenderer {
                 world[x][y].draw(x + xOffset, y + yOffset);
             }
         }
-        StdDraw.show();
+        //StdDraw.show();
     }
 }

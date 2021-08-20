@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Game {
     TERenderer ter = new TERenderer();
@@ -13,6 +14,24 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT + 2, 0, -2);
+        Generator ge = Generator.startPage();
+        ge.generateWorld();
+        ge.generatePlayer();
+        String des = null;
+        while (true) {
+            ter.renderFrame(ge.world);
+            int x_coordinate = (int) StdDraw.mouseX();
+            int y_coordinate = (int) StdDraw.mouseY() + 2;
+            if (x_coordinate < WIDTH && y_coordinate < HEIGHT) {
+                des = ge.world[x_coordinate][y_coordinate].description();
+            } else {
+                des = "";
+            }
+            ge.getKeyBoardInput();
+            Generator.showDescription(des);
+        }
     }
 
     /**
@@ -31,8 +50,66 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        if (input.length() < 3) {
+            return null;
+        }
+        int index = 0;
+        char mode = input.charAt(0);
+        input = input.substring(1);
+        Generator ge = null;
+        switch (mode) {
+            case 'Q': return null;
+            case 'L': ge = Generator.loadWorld();break;
+            case 'N': {
+                boolean notEnd = true;
+                StringBuilder seed = new StringBuilder();
+                while (input.length() > 0 && notEnd) {
+                    char ch = input.charAt(0);
+                    input = input.substring(1);
+                    switch (ch) {
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9': seed.append(ch);break;
+                        case 'S': ge = new Generator(Long.parseLong(seed.toString()));notEnd = false;break;
+                        default: System.exit(0);break;
+                    }
+                }
+                break;
+            }
+            default: return null;
+        }
+        ge.generateWorld();
+        ge.generatePlayer();
+        boolean readyToSave = false;
+        while (input.length() > 0) {
+            char ch = input.charAt(0);
+            input = input.substring(1);
+            switch (ch) {
+                case 'W':
+                case 'w':
+                case 'A':
+                case 'a':
+                case 'S':
+                case 's':
+                case 'D':
+                case 'd': ge.player.makeMove(ch);ge.keys.add(ch);break;
+                case ':': readyToSave = true;break;
+                case 'Q': {
+                    if (readyToSave) {
+                        ge.saveWorld();
+                    }
+                    break;
+                }
+                default: break;
+            }
+        }
+        return ge.world;
     }
 }
