@@ -58,7 +58,7 @@ public class Game {
             case 'Q': return null;
             case 'L': ge = Generator.loadWorld();break;
             case 'N': {
-                System.err.println(input);
+                throw new RuntimeException(input);
 //                boolean notEnd = true;
 //                StringBuilder seed = new StringBuilder();
 //                while (input.length() > 0 && notEnd) {
