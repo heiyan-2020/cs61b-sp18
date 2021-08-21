@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Leaf {
     public static Random rand;
-    private static final int MIN_SIZE = 8;
-    private static final int MAX_SIZE = 8;
+    private static final int MIN_SIZE = 6;
+    private static final int MAX_SIZE = 6;
     public int leftTopX;
     public int leftTopY;
     public int width;

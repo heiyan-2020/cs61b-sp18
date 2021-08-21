@@ -7,8 +7,8 @@ import edu.princeton.cs.introcs.StdDraw;
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = 60;
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -20,7 +20,8 @@ public class Game {
         ge.generateWorld();
         ge.generatePlayer();
         String des = null;
-        while (true) {
+        boolean end = false;
+        while (!end) {
             ter.renderFrame(ge.world);
             int x_coordinate = (int) StdDraw.mouseX();
             int y_coordinate = (int) StdDraw.mouseY() + 2;
@@ -29,7 +30,7 @@ public class Game {
             } else {
                 des = "";
             }
-            ge.getKeyBoardInput();
+            end = ge.getKeyBoardInput();
             Generator.showDescription(des);
         }
     }

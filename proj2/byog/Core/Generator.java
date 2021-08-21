@@ -98,7 +98,7 @@ public class Generator {
         } else if (deltaW > 0) {
             if (deltaH < 0) {
                 hallways.add(new Rectangular(p2_x, p2_y, Math.abs(deltaW), 1));
-                hallways.add(new Rectangular(p1_x, p2_y, 1, Math.abs(deltaH)));
+                hallways.add(new Rectangular(p1_x, p1_y, 1, Math.abs(deltaH)));
             } else if (deltaH > 0) {
                 hallways.add(new Rectangular(p2_x, p2_y, Math.abs(deltaW), 1));
                 hallways.add(new Rectangular(p1_x, p2_y, 1, Math.abs(deltaH)));
@@ -115,7 +115,7 @@ public class Generator {
         return hallways;
     }
 
-    public void getKeyBoardInput() {
+    public boolean getKeyBoardInput() {
         if (StdDraw.hasNextKeyTyped()) {
             char key = StdDraw.nextKeyTyped();
             switch (key) {
@@ -138,18 +138,20 @@ public class Generator {
                 case 'Q': {
                     if (readyToSave) {
                         saveWorld();
+                        return true;
                     }
                     break;
                 }
                 default: break;
             }
         }
+        return false;
     }
 
     public static void showDescription(String s) {
         StdDraw.setPenColor(Color.WHITE);
-        StdDraw.text(5, 40, s);
-        StdDraw.text(0, 38, String.join("", Collections.nCopies(40*16, "*")));
+        StdDraw.text(5, WIDTH, s);
+        StdDraw.text(0, WIDTH - 2, String.join("", Collections.nCopies(40*16, "*")));
         StdDraw.show();
     }
 
@@ -190,10 +192,10 @@ public class Generator {
         StdDraw.setXscale(0, WIDTH);
         StdDraw.setYscale(0, (HEIGHT + 2));
         StdDraw.clear(new Color(0, 0, 0));
-        StdDraw.text(20, 30, "THE GAME");
-        StdDraw.text(20, 25, "New Game(N)");
-        StdDraw.text(20, 23, "Load Game(L)");
-        StdDraw.text(20, 20, "Quit(Q)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2, "THE GAME");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 1, "New Game(N)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 2, "Load Game(L)");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2 - 3, "Quit(Q)");
 
         StdDraw.enableDoubleBuffering();
         StdDraw.show();
@@ -205,7 +207,7 @@ public class Generator {
                     case 'L': return loadWorld();
                     case 'N': {
                         StdDraw.clear(Color.black);
-                        StdDraw.text(20, 20, "Type a new seed, end with 'S'");
+                        StdDraw.text(WIDTH / 2, HEIGHT / 2, "Type a new seed, end with 'S'");
                         StdDraw.show();
                         StringBuilder seed = new StringBuilder();
                         boolean notEnd = true;
