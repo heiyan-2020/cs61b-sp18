@@ -46,7 +46,7 @@ public class Game {
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
      */
-    public TETile[][] playWithInputString(String input) throws Exception{
+    public TETile[][] playWithInputString(String input) {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
@@ -58,7 +58,7 @@ public class Game {
             case 'Q': return null;
             case 'L': ge = Generator.loadWorld();break;
             case 'N': {
-                throw new Exception("the key is" + mode);
+                System.err.println(input);
 //                boolean notEnd = true;
 //                StringBuilder seed = new StringBuilder();
 //                while (input.length() > 0 && notEnd) {
