@@ -17,8 +17,6 @@ public class Game {
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT + 2, 0, -2);
         Generator ge = Generator.startPage();
-        ge.generateWorld();
-        ge.generatePlayer();
         String des = null;
         boolean end = false;
         while (!end) {
@@ -87,8 +85,6 @@ public class Game {
             }
             default: break;
         }
-        ge.generateWorld();
-        ge.generatePlayer();
         boolean readyToSave = false;
         while (input.length() > 0) {
             char ch = input.charAt(0);

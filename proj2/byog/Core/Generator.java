@@ -29,6 +29,8 @@ public class Generator {
         rand = new Random(seed);
         world = new TETile[WIDTH][HEIGHT];
         keys = new ArrayList<>();
+        generateWorld();
+        generatePlayer();
     }
 
     public void generateWorld() {
@@ -244,8 +246,6 @@ public class Generator {
             BufferedReader in = new BufferedReader(new FileReader("prevWorld.txt"));
             long seed = Long.parseLong(in.readLine());
             ge = new Generator(seed);
-            ge.generateWorld();
-            ge.generatePlayer();
             ge.reloadPrevWorld(in.readLine().toCharArray());
         } catch (IOException e) {
             System.out.println("IOException" + e);
