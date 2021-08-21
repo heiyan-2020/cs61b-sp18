@@ -50,65 +50,68 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        throw new RuntimeException(input);
-//        int index = 0;
-//        char mode = input.charAt(0);
-//        input = input.substring(1);
-//        Generator ge = null;
-//        switch (mode) {
-//            case 'Q': return null;
-//            case 'L': ge = Generator.loadWorld();break;
-//            case 'N': {
-//                throw new RuntimeException(input);
-////                boolean notEnd = true;
-////                StringBuilder seed = new StringBuilder();
-////                while (input.length() > 0 && notEnd) {
-////                    char ch = input.charAt(0);
-////                    input = input.substring(1);
-////                    switch (ch) {
-////                        case '0':
-////                        case '1':
-////                        case '2':
-////                        case '3':
-////                        case '4':
-////                        case '5':
-////                        case '6':
-////                        case '7':
-////                        case '8':
-////                        case '9': seed.append(ch);break;
-////                        case 'S': ge = new Generator(Long.parseLong(seed.toString()));notEnd = false;break;
-////                        default: System.exit(0);break;
-////                    }
-////                }
-////                break;
-//            }
-//            default: break;
-//        }
-//        ge.generateWorld();
-//        ge.generatePlayer();
-//        boolean readyToSave = false;
-//        while (input.length() > 0) {
-//            char ch = input.charAt(0);
-//            input = input.substring(1);
-//            switch (ch) {
-//                case 'W':
-//                case 'w':
-//                case 'A':
-//                case 'a':
-//                case 'S':
-//                case 's':
-//                case 'D':
-//                case 'd': ge.player.makeMove(ch);ge.keys.add(ch);break;
-//                case ':': readyToSave = true;break;
-//                case 'Q': {
-//                    if (readyToSave) {
-//                        ge.saveWorld();
-//                    }
-//                    break;
-//                }
-//                default: break;
-//            }
-//        }
-//        return ge.world;
+        int index = 0;
+        char mode = input.charAt(0);
+        input = input.substring(1);
+        Generator ge = null;
+        switch (mode) {
+            case 'q':
+            case 'Q': return null;
+            case 'l':
+            case 'L': ge = Generator.loadWorld();break;
+            case 'n':
+            case 'N': {
+                boolean notEnd = true;
+                StringBuilder seed = new StringBuilder();
+                while (input.length() > 0 && notEnd) {
+                    char ch = input.charAt(0);
+                    input = input.substring(1);
+                    switch (ch) {
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9': seed.append(ch);break;
+                        case 's':
+                        case 'S': ge = new Generator(Long.parseLong(seed.toString()));notEnd = false;break;
+                        default: System.exit(0);break;
+                    }
+                }
+                break;
+            }
+            default: break;
+        }
+        ge.generateWorld();
+        ge.generatePlayer();
+        boolean readyToSave = false;
+        while (input.length() > 0) {
+            char ch = input.charAt(0);
+            input = input.substring(1);
+            switch (ch) {
+                case 'W':
+                case 'w':
+                case 'A':
+                case 'a':
+                case 'S':
+                case 's':
+                case 'D':
+                case 'd': ge.player.makeMove(ch);ge.keys.add(ch);break;
+                case ':': readyToSave = true;break;
+                case 'q':
+                case 'Q': {
+                    if (readyToSave) {
+                        ge.saveWorld();
+                    }
+                    break;
+                }
+                default: break;
+            }
+        }
+        return ge.world;
     }
 }
